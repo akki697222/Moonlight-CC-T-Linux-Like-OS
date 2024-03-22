@@ -1,5 +1,5 @@
 local cfg = {}
-local sysver = "0.0.4"
+local sysver = "0.0.5"
 local loaderver = "0.0.1"
 local biosver = "0.0.1"
 

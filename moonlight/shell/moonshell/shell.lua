@@ -1,12 +1,9 @@
 local uCfg = require("/moonlight/lib/libuserhandler")
 local root = require("/moonlight/lib/libroothandler")
-local cmdList = require("/moonlight/bin/list")
 local log = require("/moonlight/lib/liblogging")
 local slog = require("/moonlight/lib/libsyslog")
-local devCfg = require("/moonlight/proc/devmode")
-local dev = devCfg.getDevMode()
-local runCmd = ""
 local defaultDir = "moonlight/home"
+uCfg.setDefaultUser("Default")
 
 local function drawShell()
     if root.getRootStatus() == true then
@@ -17,6 +14,7 @@ local function drawShell()
             io.write("/" .. shell.dir())
         end
         term.setTextColor(colors.white)
+        io.write(":")
         if shell.dir() == defaultDir then
             io.write("~ ")
         else
@@ -50,7 +48,7 @@ local function waitShellInput()
                 log.write("Exiting Shell...", 1)
                 return
             elseif root.getRootStatus() == true then
-                uCfg.setCurrentUser("Default")
+                uCfg.setCurrentUser(uCfg.getDefaultUser())
                 log.write("Exiting Root...", 1)
                 root.setRootStatus(false)
             end
