@@ -1,7 +1,7 @@
 local log = require("/moonlight/lib/liblogging")
 local slog = require("/moonlight/lib/libsyslog")
 local aliasCommands = {
-    "ls", "cd", "cat", "grep", "log", "version", "switchshell", "su", "echo", "ccpt"
+    "ls", "cd", "cat", "grep", "log", "version", "switchshell", "su", "echo", "ccpt", "sudo"
 }
 
 local kernel = {}
