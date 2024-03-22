@@ -1,7 +1,7 @@
 local currentDate = os.date("%Y-%m-%d")
 local currentTime = os.date("%H:%M:%S")
 local logFileName = currentDate .. ".log"
-local logFilePath = "/moonlight/logs/" .. logFileName
+local logFilePath = "/moonlight/var/log/" .. logFileName
 local logLevel = {
     "INFO",
     "WARN",

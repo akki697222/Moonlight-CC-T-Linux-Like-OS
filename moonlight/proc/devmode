@@ -1,9 +1,5 @@
 local cfg = {}
-local dev = false
-
-function cfg.setDevMode(bool) -- true or false
-    dev = bool
-end
+local dev = true
 
 function cfg.getDevMode()
     return dev

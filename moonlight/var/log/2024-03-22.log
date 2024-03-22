@@ -1,0 +1,8 @@
+[2024-03-22 21:20:34] [INFO] STARTUP: SELECTED BOOTLOADER.
+[2024-03-22 21:20:40] [INFO] Initilizing Kernel...
+[2024-03-22 21:20:40] [INFO] Run Command: ls
+[2024-03-22 21:20:40] [INFO] Run Command: ccpt
+[2024-03-22 21:20:40] [INFO] Run Command: ccpt help
+[2024-03-22 21:20:40] [INFO] Run Command: ccpt list
+[2024-03-22 21:20:40] [INFO] Run Command: ccpt install fileutils
+[2024-03-22 21:20:40] [INFO] Run Command: ccpt list

@@ -1,7 +1,7 @@
 local currentDate = os.date("%Y-%m-%d")
 local currentDateandTime = os.date("%b %d %H:%M:%S")
 local logFileName = currentDate.."_sys.log"
-local logFilePath = "/moonlight/logs/"..logFileName
+local logFilePath = "/moonlight/var/log/"..logFileName
 local log = {}
 
 function log.init()
