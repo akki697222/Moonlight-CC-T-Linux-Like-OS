@@ -1,0 +1,12 @@
+local cfg = {}
+local dev = false
+
+function cfg.setDevMode(bool) -- true or false
+    dev = bool
+end
+
+function cfg.getDevMode()
+    return dev
+end
+
+return cfg

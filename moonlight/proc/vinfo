@@ -1,0 +1,18 @@
+local cfg = {}
+local sysver = "0.0.4"
+local loaderver = "0.0.1"
+local biosver = "0.0.1"
+
+function cfg.getSysVer()
+    return sysver
+end
+
+function cfg.getLoaderVer()
+    return loaderver
+end
+
+function cfg.getBiosVer()
+    return biosver
+end
+
+return cfg
