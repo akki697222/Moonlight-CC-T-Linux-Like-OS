@@ -8,13 +8,20 @@ local dev = devCfg.getDevMode()
 local runCmd = ""
 local defaultDir = "moonlight/home"
 
-
 local function drawShell()
     if root.getRootStatus() == true then
         term.setTextColor(colors.white)
         io.write(uCfg.getCurrentUser() .. "@" .. os.getComputerID())
-        io.write(": /" .. shell.dir())
-        io.write("# ")
+        if shell.dir() == defaultDir then
+        else
+            io.write("/" .. shell.dir())
+        end
+        term.setTextColor(colors.white)
+        if shell.dir() == defaultDir then
+            io.write("~ ")
+        else
+            io.write("# ")
+        end
     elseif root.getRootStatus() == false then
         term.setTextColor(colors.lime)
         io.write(uCfg.getCurrentUser() .. "@" .. os.getComputerID())

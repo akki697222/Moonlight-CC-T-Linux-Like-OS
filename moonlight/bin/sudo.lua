@@ -10,7 +10,6 @@ else
     if input == password then
         root.setRootStatus(true)
         shell.run(table.concat(args, " "))
-        sleep(0.1)
         root.setRootStatus(false)
     else
         print("sudo: Access Denied.")
