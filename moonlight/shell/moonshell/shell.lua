@@ -2,6 +2,7 @@ local uCfg = require("/moonlight/lib/libuserhandler")
 local root = require("/moonlight/lib/libroothandler")
 local log = require("/moonlight/lib/liblogging")
 local slog = require("/moonlight/lib/libsyslog")
+local dev = require("/moonlight/lib/libdevmodehandler")
 local defaultDir = "moonlight/home"
 uCfg.setDefaultUser("Default")
 
@@ -46,7 +47,11 @@ local function waitShellInput()
         if input == "exit" then
             if root.getRootStatus() == false then
                 log.write("Exiting Shell...", 1)
-                return
+                if dev.getMode() == "true" then
+                    return
+                else
+                    os.shutdown()
+                end
             elseif root.getRootStatus() == true then
                 uCfg.setCurrentUser(uCfg.getDefaultUser())
                 log.write("Exiting Root...", 1)

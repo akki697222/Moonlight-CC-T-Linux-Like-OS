@@ -5,12 +5,11 @@ local function listDirectory(directory, showHidden)
         table.insert(tbl, { name = name, isDir = isDir })
     end
 
-    local folders = {}
     local files = {}
 
     local success, fileListOrError = pcall(fs.list, directory)
     if not success then
-        print(args[1]..": No such file or directory")
+        print(args[1] .. ": No such file or directory")
         return
     end
 
@@ -20,22 +19,38 @@ local function listDirectory(directory, showHidden)
         end
 
         local isDir = fs.isDir(fs.combine(directory, name))
-        addToTable(isDir and folders or files, name, isDir)
+        addToTable(files, name, isDir)
 
         ::continue::
     end
 
-
-    for _, entry in ipairs(folders) do
-        term.setTextColor(colors.blue)
-        io.write(entry.name.." ")
-    end
-    print("")
+    local maxNameLength = 0
     for _, entry in ipairs(files) do
-        term.setTextColor(colors.lightBlue)
-        io.write(entry.name.." ")
+        if #entry.name > maxNameLength then
+            maxNameLength = #entry.name
+        end
     end
+
+    local maxPerLine = 6 
+    if #files > maxPerLine then
+        local halfCount = math.ceil(#files / 2)
+        for i, entry in ipairs(files) do
+            term.setTextColor(entry.isDir and colors.blue or colors.lightBlue)
+            io.write(entry.name .. string.rep(" ", maxNameLength - #entry.name + 2))
+
+            if i == halfCount then
+                print("")
+            end
+        end
+    else
+        for _, entry in ipairs(files) do
+            term.setTextColor(entry.isDir and colors.blue or colors.lightBlue)
+            io.write(entry.name .. string.rep(" ", maxNameLength - #entry.name + 2))
+        end
+    end
+
     term.setTextColor(colors.white)
+    print("")
 end
 
 local function execute(directory)
@@ -48,7 +63,6 @@ local function execute(directory)
         showHidden = true
     end
     listDirectory(directory, showHidden)
-    print("")
 end
 
 if shell then

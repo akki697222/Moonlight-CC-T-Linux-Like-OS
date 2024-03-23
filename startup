@@ -1,6 +1,2 @@
-local log = require("moonlight.lib.liblogging")
-local slog = require("moonlight.lib.libsyslog")
-log.init()
-slog.init()
 shell.run("ccpt","startup")
 shell.run("/moonlight/boot/mlbtl/loader.lua")

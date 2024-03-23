@@ -1,7 +1,8 @@
 local currentDate = os.date("%Y-%m-%d")
 local currentTime = os.date("%H:%M:%S")
+local currentDateandTime = os.date("%b %d %H:%M:%S")
 local logFileName = currentDate .. ".log"
-local logFilePath = "/moonlight/var/log/" .. logFileName
+local logFilePath = "/moonlight/var/logs/" .. logFileName
 local logLevel = {
     "INFO",
     "WARN",
@@ -16,6 +17,7 @@ function log.init()
         local file = fs.open(logFilePath, "w")
         file.close()
     end
+    print("["..currentDateandTime.."] liblogging: liblogging successfully initilized.")
 end
 
 function log.write(message, level) -- level, 1: info 2: warn 3: error 4: fatal

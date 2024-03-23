@@ -1,7 +1,7 @@
 local currentDate = os.date("%Y-%m-%d")
 local currentDateandTime = os.date("%b %d %H:%M:%S")
 local logFileName = currentDate.."_sys.log"
-local logFilePath = "/moonlight/var/log/"..logFileName
+local logFilePath = "/moonlight/var/logs/"..logFileName
 local log = {}
 
 function log.init()
@@ -9,11 +9,12 @@ function log.init()
         local file = fs.open(logFilePath, "w")
         file.close()
     end
+    print("["..currentDateandTime.."] libsyslog: libsyslog successfully initilized.")
 end
 
-function log.write(message, sysinfo) -- level, 1: info 2: warn 3: error 4: fatal
+function log.write(message, vendor) -- level, 1: info 2: warn 3: error 4: fatal
     local file = fs.open(logFilePath, "a")
-    file.writeLine(currentDateandTime.." "..sysinfo..": "..message)
+    file.writeLine("["..currentDateandTime.."] "..vendor.." : "..message)
     file.close()
 end
 

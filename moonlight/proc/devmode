@@ -1,8 +1,1 @@
-local cfg = {}
-local dev = true
-
-function cfg.getDevMode()
-    return dev
-end
-
-return cfg
+true
