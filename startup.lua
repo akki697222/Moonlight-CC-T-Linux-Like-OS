@@ -5,6 +5,9 @@ local log = require("moonlight.lib.liblogging")
 local slog = require("moonlight.lib.libsyslog")
 log.init()
 slog.init()
+
+
+
 function centerText(text)
     local textLength = string.len(text)
     local centerX = math.floor((termx - textLength) / 2)

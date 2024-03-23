@@ -28,13 +28,14 @@ local function listDirectory(directory, showHidden)
 
     for _, entry in ipairs(folders) do
         term.setTextColor(colors.blue)
-        print(entry.name)
+        io.write(entry.name.." ")
     end
-
+    print("")
     for _, entry in ipairs(files) do
-        term.setTextColor(colors.white)
-        print(entry.name)
+        term.setTextColor(colors.lightBlue)
+        io.write(entry.name.." ")
     end
+    term.setTextColor(colors.white)
 end
 
 local function execute(directory)
@@ -46,8 +47,8 @@ local function execute(directory)
     if args[1] == "--a" then
         showHidden = true
     end
-
     listDirectory(directory, showHidden)
+    print("")
 end
 
 if shell then

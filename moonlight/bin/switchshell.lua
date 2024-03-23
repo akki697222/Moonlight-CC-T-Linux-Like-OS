@@ -9,14 +9,18 @@ if args[1] == nil then
     print("switchshell: Access Denied.")
 elseif args[1] == "cash" then
     if root.getRootStatus() == true then
-        print("Sorry, switchshell is disabled due to many bugs.")
+        shell.exit()
+        shell.run("/moonlight/shell/cash/cash")
+        shell.exit()
         return
     end
     print("switchshell: Access Denied.")
 elseif args[1] == "moonshell" then
-    print("Sorry, switchshell is disabled due to many bugs.")
+    shell.exit()
+    shell.run("/moonlight/shell/moonshell/shell")
+    shell.exit()
     return
 else
-    print(args[1].."is not valid shell.")
+    print(args[1] .. "is not valid shell.")
     return
 end

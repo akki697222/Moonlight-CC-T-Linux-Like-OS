@@ -7,15 +7,16 @@ local aliasCommands = {
 local kernel = {}
 
 function kernel.init()
+    slog.init()
+    log.init()
     log.write("Initilizing Kernel...", 1)
     slog.write("Initilizing Kernel...", "Kernel")
-    slog.init()
     shell.setAlias("list", "/moonlight/bin/ls")
-    shell.setAlias("dir", "/moonlight/bin/ls")
-    for index, value in ipairs(aliasCommands) do
-        shell.setAlias(value, "/moonlight/bin/"..value)
-        slog.write("Set Alias: "..value, "Kernel")
-    end
+shell.setAlias("dir", "/moonlight/bin/ls")
+for index, value in ipairs(aliasCommands) do
+    shell.setAlias(value, "/moonlight/bin/" .. value)
+    slog.write("Set Alias: " .. value, "Kernel")
+end
 end
 
 function kernel.a()

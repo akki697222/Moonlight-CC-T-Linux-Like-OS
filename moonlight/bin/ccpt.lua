@@ -135,16 +135,16 @@ end
 	@return boolean installed: Is the package installed?
 ]]--
 function isinstalled(packageid)
-	return not (readData("/moonlight/tmp/installedpackages",true)[packageid] == nil)
+	return not (readData("/moonlight/etc/installedpackages",true)[packageid] == nil)
 end
 
 --[[ Checks wether a package is installed
 	@param String packageid: The ID of the package
-	@return Table|boolean packagedata|error: Read the data of the package from '/moonlight/tmp/packagedata'; If package is not found return false
+	@return Table|boolean packagedata|error: Read the data of the package from '/moonlight/etc/packagedata'; If package is not found return false
 ]]--
 function getpackagedata(packageid)
 	-- Read package data
-	allpackagedata = readData("/moonlight/tmp/packagedata",false)
+	allpackagedata = readData("/moonlight/etc/packagedata",false)
 	-- Is the package data built yet?
 	if allpackagedata==false then
 		properprint.pprint("Package Date is not yet built. Please execute 'ccpt update' first. If this message still apears, thats a bug, please report.")
@@ -157,7 +157,7 @@ function getpackagedata(packageid)
 		return false
 	end
 	-- Is the package installed?
-	installedversion = readData("/moonlight/tmp/installedpackages",true)[packageid]
+	installedversion = readData("/moonlight/etc/installedpackages",true)[packageid]
 	if not (installedversion==nil) then
 		packagedata["status"] = "installed"
 		packagedata["installedversion"] = installedversion
@@ -175,7 +175,7 @@ end
 function checkforupdates(installedpackages,reducedprint)
 	-- If parameters are nil, load defaults
 	reducedprint = reducedprint or false
-	installedpackages = installedpackages or readData("/moonlight/tmp/installedpackages",true)
+	installedpackages = installedpackages or readData("/moonlight/etc/installedpackages",true)
 	
 	bprint("Checking for updates...",reducedprint)
 	
@@ -270,7 +270,7 @@ function update(startup)
 	end
 	-- Load custom packages
 	bprint("Reading Custom packages...",startup)
-	custompackages = readData("/moonlight/tmp/custompackages",true)
+	custompackages = readData("/moonlight/etc/custompackages",true)
 	-- Add Custom Packages to overall package list
 	for k,v in pairs(custompackages) do
 		packages[k] = v
@@ -288,10 +288,10 @@ function update(startup)
 		end
 	end
 	bprint("Storing package data of all packages...",startup)
-	storeData("/moonlight/tmp/packagedata",packagedata)
+	storeData("/moonlight/etc/packagedata",packagedata)
 	-- Read installed packages
 	bprint("Reading Installed Packages...",startup)
-	installedpackages = readData("/moonlight/tmp/installedpackages",true)
+	installedpackages = readData("/moonlight/etc/installedpackages",true)
 	installedpackagesnew = {}
 	for k,v in pairs(installedpackages) do
 		if packagedata[k]==nil then
@@ -300,7 +300,7 @@ function update(startup)
 			installedpackagesnew[k] = v
 		end
 	end
-	storeData("/moonlight/tmp/installedpackages",installedpackagesnew)
+	storeData("/moonlight/etc/installedpackages",installedpackagesnew)
 	bprint("Data update complete!",startup)
 	
 	-- Check for updates
@@ -347,7 +347,7 @@ function installpackage(packageid,packageinfo)
 	-- Install dependencies
 	properprint.pprint("Installing dependencies of '" .. packageid .. "', if there are any...")
 	for k,v in pairs(packageinfo["dependencies"]) do
-		installedpackages = readData("/moonlight/tmp/installedpackages",true)
+		installedpackages = readData("/moonlight/etc/installedpackages",true)
 		if installedpackages[k] == nil then
 			if installpackage(k,nil)==false then
 				return false
@@ -366,9 +366,9 @@ function installpackage(packageid,packageinfo)
 	if result==false then
 		return false
 	end
-	installedpackages = readData("/moonlight/tmp/installedpackages",true)
+	installedpackages = readData("/moonlight/etc/installedpackages",true)
 	installedpackages[packageid] = packageinfo["newestversion"]
-	storeData("/moonlight/tmp/installedpackages",installedpackages)
+	storeData("/moonlight/etc/installedpackages",installedpackages)
 	print("'" .. packageid .. "' successfully installed!")
 	installed = installed+1
 end
@@ -383,19 +383,19 @@ function installlibrary(installdata)
 end
 
 function installscript(installdata)
-	result = downloadfile("/moonlight/tmp/tempinstaller",installdata["scripturl"])
+	result = downloadfile("/moonlight/etc/tempinstaller",installdata["scripturl"])
 	if result==false then
 		return false
 	end
-	shell.run("/moonlight/tmp/tempinstaller","install")
-	fs.delete("/moonlight/tmp/tempinstaller")
+	shell.run("/moonlight/etc/tempinstaller","install")
+	fs.delete("/moonlight/etc/tempinstaller")
 end
 
 -- Upgrade
 -- Upgrade installed Packages
 -- TODO: Single package updates
 function upgrade()
-	packageswithupdates = checkforupdates(readData("/moonlight/tmp/installedpackages",true),false)
+	packageswithupdates = checkforupdates(readData("/moonlight/etc/installedpackages",true),false)
 	if packageswithupdates==false then
 		return
 	end
@@ -423,7 +423,7 @@ function upgradepackage(packageid,packageinfo)
 		end
 	end
 	
-	installedpackages = readData("/moonlight/tmp/installedpackages",true)
+	installedpackages = readData("/moonlight/etc/installedpackages",true)
 	if installedpackages[packageid]==packageinfo["newestversion"] then
 		properprint.pprint("'" .. packageid .. "' already updated! Skipping... (This is NOT an error)")
 		return true
@@ -434,7 +434,7 @@ function upgradepackage(packageid,packageinfo)
 	-- Install/Update dependencies
 	properprint.pprint("Updating or installing new dependencies of '" .. packageid .. "', if there are any...")
 	for k,v in pairs(packageinfo["dependencies"]) do
-		installedpackages = readData("/moonlight/tmp/installedpackages",true)
+		installedpackages = readData("/moonlight/etc/installedpackages",true)
 		if installedpackages[k] == nil then
 			if installpackage(k,nil)==false then
 				return false
@@ -453,9 +453,9 @@ function upgradepackage(packageid,packageinfo)
 	if result==false then
 		return false
 	end
-	installedpackages = readData("/moonlight/tmp/installedpackages",true)
+	installedpackages = readData("/moonlight/etc/installedpackages",true)
 	installedpackages[packageid] = packageinfo["newestversion"]
-	storeData("/moonlight/tmp/installedpackages",installedpackages)
+	storeData("/moonlight/etc/installedpackages",installedpackages)
 	print("'" .. packageid .. "' successfully updated!")
 	updated = updated+1
 end
@@ -463,12 +463,12 @@ end
 --[[ Different install methodes require different update methodes
 ]]--
 function updatescript(installdata)
-	result = downloadfile("/moonlight/tmp/tempinstaller",installdata["scripturl"])
+	result = downloadfile("/moonlight/etc/tempinstaller",installdata["scripturl"])
 	if result==false then
 		return false
 	end
-	shell.run("/moonlight/tmp/tempinstaller","update")
-	fs.delete("/moonlight/tmp/tempinstaller")
+	shell.run("/moonlight/etc/tempinstaller","update")
+	fs.delete("/moonlight/etc/tempinstaller")
 end
 
 -- Uninstall
@@ -489,7 +489,7 @@ function uninstall()
 	end
 	
 	-- Check witch package(s) to remove (A package dependend on a package that's about to get removed is also removed)
-	packagestoremove = getpackagestoremove(args[2],packageinfo,readData("/moonlight/tmp/installedpackages",true),{})
+	packagestoremove = getpackagestoremove(args[2],packageinfo,readData("/moonlight/etc/installedpackages",true),{})
 	packagestoremovestring = ""
 	for k,v in pairs(packagestoremove) do
 		if not (k==args[2]) then
@@ -536,9 +536,9 @@ function uninstall()
 		if result==false then
 			return false
 		end
-		installedpackages = readData("/moonlight/tmp/installedpackages",true)
+		installedpackages = readData("/moonlight/etc/installedpackages",true)
 		installedpackages[k] = nil
-		storeData("/moonlight/tmp/installedpackages",installedpackages)
+		storeData("/moonlight/etc/installedpackages",installedpackages)
 		print("'" .. k .. "' successfully uninstalled!")
 		removed = removed+1
 	end
@@ -577,12 +577,12 @@ function removelibrary(installdata)
 end
 
 function removescript(installdata)
-	result = downloadfile("/moonlight/tmp/tempinstaller",installdata["scripturl"])
+	result = downloadfile("/moonlight/etc/tempinstaller",installdata["scripturl"])
 	if result==false then
 		return false
 	end
-	shell.run("/moonlight/tmp/tempinstaller","remove")
-	fs.delete("/moonlight/tmp/tempinstaller")
+	shell.run("/moonlight/etc/tempinstaller","remove")
+	fs.delete("/moonlight/etc/tempinstaller")
 end
 
 -- Add
@@ -598,16 +598,16 @@ function add()
 		properprint.pprint("Incomplete command, missing: 'Packageinfo URL'; Syntax: 'ccpt add <PackageID> <PackageinfoURL>'")
 		return
 	end
-	custompackages = readData("/moonlight/tmp/custompackages",true)
+	custompackages = readData("/moonlight/etc/custompackages",true)
 	if not (custompackages[args[2]]==nil) then
 		properprint.pprint("A custom package with the id '" .. args[2] .. "' already exists! Please choose a different one.")
 		return
 	end
-	if not file_exists("/moonlight/tmp/packagedata") then
+	if not file_exists("/moonlight/etc/packagedata") then
 		properprint.pprint("Package Date is not yet built. Please execute 'ccpt update' first. If this message still apears, thats a bug, please report.")
 	end
 	-- Overwrite default packages?
-	if not (readData("/moonlight/tmp/packagedata",true)[args[2]]==nil) then
+	if not (readData("/moonlight/etc/packagedata",true)[args[2]]==nil) then
 		properprint.pprint("A package with the id '" .. args[2] .. "' already exists! This package will be overwritten if you proceed. Do you want to proceed? [y/n]:")
 		if not ynchoice() then
 			return
@@ -615,7 +615,7 @@ function add()
 	end
 	-- Add entry in custompackages file
 	custompackages[args[2]] = args[3]
-	storeData("/moonlight/tmp/custompackages",custompackages)
+	storeData("/moonlight/etc/custompackages",custompackages)
 	properprint.pprint("Custom package successfully added!")
 	-- Update packagedata?
 	properprint.pprint("Do you want to update the package data ('cctp update')? Your custom package won't be able to be installed until updating. [y/n]:")
@@ -633,7 +633,7 @@ function remove()
 		properprint.pprint("Incomplete command, missing: 'Package ID'; Syntax: 'ccpt remove <PackageID>'")
 		return
 	end
-	custompackages = readData("/moonlight/tmp/custompackages",true)
+	custompackages = readData("/moonlight/etc/custompackages",true)
 	if custompackages[args[2]]==nil then
 		properprint.pprint("A custom package with the id '" .. args[2] .. "' does not exist!")
 		return
@@ -646,7 +646,7 @@ function remove()
 	end
 	-- Remove entry from custompackages file
 	custompackages[args[2]] = nil
-	storeData("/moonlight/tmp/custompackages",custompackages)
+	storeData("/moonlight/etc/custompackages",custompackages)
 	properprint.pprint("Custom package successfully removed!")
 	-- Update packagedata?
 	properprint.pprint("Do you want to update the package data ('cctp update')? Your custom package will still be able to be installed/updated/uninstalled until updating. [y/n]:")
@@ -689,13 +689,13 @@ end
 function list()
 	-- Read data
 	print("Reading all packages data...")
-	if not file_exists("/moonlight/tmp/packagedata") then
+	if not file_exists("/moonlight/etc/packagedata") then
 		properprint.pprint("No Packages found. Please run 'cctp update' first.'")
 		return
 	end
-	packagedata = readData("/moonlight/tmp/packagedata",true)
+	packagedata = readData("/moonlight/etc/packagedata",true)
 	print("Reading Installed packages...")
-	installedpackages = readData("/moonlight/tmp/installedpackages",true)
+	installedpackages = readData("/moonlight/etc/installedpackages",true)
 	-- Print list
 	properprint.pprint("List of all known Packages:")
 	for k,v in pairs(installedpackages) do
@@ -751,28 +751,6 @@ function version()
 	properprint.pprint(linecount .. " lines of code containing " .. #readFile("/moonlight/bin/ccpt.lua",nil) .. " Characters.")
 end
 
--- Idk randomly appeared one day
---[[ Fuse
-]]--
-function zzzzzz()
-	properprint.pprint("The 'ohnosecond':")
-	properprint.pprint("The 'ohnosecond' is the fraction of time between making a mistake and realizing it.")
-	properprint.pprint("(Oh, and please fix the hole you've created)")
-end
-
---[[ Explode
-]]--
-function boom()
-	print("|--------------|")
-	print("| |-|      |-| |")
-	print("|    |----|    |")
-	print("|  |--------|  |")
-	print("|  |--------|  |")
-	print("|  |-      -|  |")
-	print("|--------------|")
-	print("....\"Have you exploded today?\"...")
-end
-
 -- TAB AUTOCOMLETE HELPER FUNCTIONS --
 --[[ Add Text to result array if it fits
 	@param String option: Autocomplete option to check
@@ -803,14 +781,14 @@ autocompletepackagecache = {}
 function completepackageid(curText,filterstate)
 	result = {}
 	if curText=="" or curText==nil then
-		packagedata = readData("/moonlight/tmp/packagedata",false)
+		packagedata = readData("/moonlight/etc/packagedata",false)
 		if not packagedata then
 			return {}
 		end
 		autocompletepackagecache = packagedata
 	end
 	if not (filterstate==nil) then
-		installedversion = readData("/moonlight/tmp/installedpackages",true)
+		installedversion = readData("/moonlight/etc/installedpackages",true)
 	end
 	for i,v in pairs(autocompletepackagecache) do
 		if filterstate=="installed" then
@@ -831,7 +809,7 @@ end
 -- Complete packageid, but only for custom packages, which is much simpler
 function completecustompackageid(curText)
 	result = {}
-	custompackages = readData("/moonlight/tmp/custompackages",true)
+	custompackages = readData("/moonlight/etc/custompackages",true)
 	for i,v in pairs(custompackages) do
 		result = addtoresultifitfits(i,curText,result)
 	end
