@@ -11,7 +11,7 @@ os.loadAPI("/moonlight/lib/properprint.lua")
 args = {...}
 
 -- Link to a list of packages that are present by default (used in 'update()')
-defaultpackageurl = "https://raw.githubusercontent.com/PentagonLP/ccpt/main/defaultpackages.ccpt"
+defaultpackageurl = "https://raw.githubusercontent.com/akki697222/Moonlight-CC-T-Linux-Like-OS/main/packages.ccpt"
 
 -- Counters to print out at the very end
 installed = 0

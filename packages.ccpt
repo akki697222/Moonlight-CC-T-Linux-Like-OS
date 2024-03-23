@@ -1,5 +1,5 @@
 {
     packages = {
-    advancedcmd = "",
+    advancedcmd = "https://raw.githubusercontent.com/akki697222/Moonlight-CC-T-Linux-Like-OS/main/packages/advancedcmd/packageinfo.ccpt",
     }
 }
