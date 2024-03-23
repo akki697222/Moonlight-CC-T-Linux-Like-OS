@@ -1,1 +1,0 @@
-shell.run("/moonlight/boot/mlbtl/loader.lua")

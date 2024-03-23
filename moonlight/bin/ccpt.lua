@@ -4,6 +4,8 @@
 	Version: 1.0
 ]]
 
+startup = false
+
 -- Load properprint library
 os.loadAPI("/moonlight/lib/properprint.lua")
 
