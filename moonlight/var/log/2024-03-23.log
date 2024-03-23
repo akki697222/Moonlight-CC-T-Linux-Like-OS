@@ -38,3 +38,11 @@
 [2024-03-23 09:33:19] [INFO] Run Command: log
 [2024-03-23 09:33:19] [INFO] Run Command: log sys write akki has eaten akki
 [2024-03-23 09:33:19] [INFO] Run Command: log sys write "akki has eaten" akki
+[2024-03-23 09:33:19] [INFO] Run Command: ls
+[2024-03-23 09:33:19] [INFO] Run Command: cd ..
+[2024-03-23 09:33:19] [INFO] Run Command: cd home
+[2024-03-23 09:33:19] [INFO] Run Command: ls
+[2024-03-23 09:33:19] [INFO] Run Command: sudotest
+[2024-03-23 09:33:19] [INFO] Run Command: cp
+[2024-03-23 09:33:19] [INFO] Run Command: cp /moonlight/sys/kernel/* /moonlight/home
+[2024-03-23 09:33:19] [INFO] Run Command: ls

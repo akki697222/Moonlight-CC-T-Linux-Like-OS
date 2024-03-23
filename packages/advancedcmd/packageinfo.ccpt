@@ -3,7 +3,7 @@
     id = "advancedcmd",
     comment = "Advanced Commands for Moonlight linux.",
     author = "akki697222",
-    website = "https://github.com/akki697222/Moonlight-CC-T-Linux-Like-OS",
+    website = "https://github.com/akki697222/Moonlight-CC-T-Linux-Like-OS/",
     newestversion = "1.0",
     dependencies = {
     },
