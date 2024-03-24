@@ -1,5 +1,5 @@
 term.clear()
-local version = "1.00"
+local version = "1.01"
 local mltext = "MoonLoader GRUB version " .. version
 local tx, ty = term.getSize()
 local s = 1

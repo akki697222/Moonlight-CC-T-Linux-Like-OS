@@ -1,6 +1,6 @@
 local cfg = {}
-local sysver = "0.1.2" -- this version is numbers of github commits lol
-local loaderver = "1.00" -- ml grub
+local sysver = "0.2.9" -- this version is numbers of github commits lol
+local loaderver = "1.01" -- ml grub
 local biosver = "0.0.1" -- bios is not using
 
 function cfg.getSysVer()
