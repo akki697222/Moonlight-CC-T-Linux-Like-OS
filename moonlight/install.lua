@@ -69,11 +69,13 @@ local mdir = {
 }
 local sdir = {
     boot = {"mlbtl"},
-    shell = {"cash", "moonshell"},
     sys = {"firmware", "kernel"},
     var = {"logs"},
 }
 
+cd("/moonlight/shell")
+fs.makeDir("cash")
+fs.makeDir("moonshell")
 shell.run("wget https://raw.githubusercontent.com/akki697222/Moonlight-CC-T-Linux-Like-OS/main/startup")
 createDirectories(mdir, sdir)
 gettingpackage()
