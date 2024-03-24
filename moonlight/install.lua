@@ -28,7 +28,7 @@ local function gettingpackage()
     local proc = {"clabel","currentuser","defaultuser","devmode","pass","root","shellrunning"}
     cd("bin")
     for _, wget in ipairs(bin) do
-        wget(wget..".lua")
+        shell.run("wget https://raw.githubusercontent.com/akki697222/Moonlight-CC-T-Linux-Like-OS/main/moonlight/"..wget..".lua")
     end
     cd("/moonlight")
     cd("boot")
@@ -38,7 +38,7 @@ local function gettingpackage()
     cd("shell")
     cd("cash")
     for _, wget in ipairs(shell) do
-        wget(wget..".lua")
+        shell.run("wget https://raw.githubusercontent.com/akki697222/Moonlight-CC-T-Linux-Like-OS/main/moonlight/"..wget..".lua")
     end
     cd("/moonlight/shell")
     cd("moonshell")
@@ -47,7 +47,7 @@ local function gettingpackage()
     cd("sys")
     cd("kernel")
     for _, wget in ipairs(sys) do
-        wget(wget..".lua")
+        shell.run("wget https://raw.githubusercontent.com/akki697222/Moonlight-CC-T-Linux-Like-OS/main/moonlight/"..wget..".lua")
     end
     cd("/moonlight")
     cd("/proc")
