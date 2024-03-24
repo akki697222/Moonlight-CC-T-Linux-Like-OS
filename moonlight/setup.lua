@@ -89,6 +89,8 @@ local input = read()
 if not input == nil or "" then
     setDefaultUser(input)
 end
+term.clear()
+term.setCursorPos(1,1)
 print("Please set user password.")
 local input = read()
 setPass(input)

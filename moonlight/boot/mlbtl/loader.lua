@@ -20,6 +20,29 @@ local function centerText(text)
     return centerX
 end
 
+local function drawOptionsEvent()
+    term.setCursorPos(4, 5)
+    term.setTextColor(colors.white)
+    for i = 1, #options do
+        if i == s then
+            term.setBackgroundColor(colors.lightGray)
+            term.setTextColor(colors.black)
+            io.write(" "..options[i])
+            for b = 1, tx - string.len(options[i]) - 7 do
+                io.write(" ")
+            end
+            term.setCursorPos(4, ty - ty + 5 + i)
+        else
+            term.setBackgroundColor(colors.black)
+            term.setTextColor(colors.white)
+            io.write(" "..options[i])
+            term.setCursorPos(4, ty - ty + 5 + i)
+        end
+        term.setBackgroundColor(colors.black)
+        term.setTextColor(colors.white)
+    end
+end
+
 local function drawBoxEvent()
     term.clear()
     term.setTextColor(colors.lightGray)
@@ -45,26 +68,6 @@ local function drawBoxEvent()
     end
     io.write("\x8E")
     term.setCursorPos(1, 1)
-    term.setCursorPos(4, 5)
-    term.setTextColor(colors.white)
-    for i = 1, #options do
-        if i == s then
-            term.setBackgroundColor(colors.lightGray)
-            term.setTextColor(colors.black)
-            io.write(" "..options[i])
-            for b = 1, tx - string.len(options[i]) - 7 do
-                io.write(" ")
-            end
-            term.setCursorPos(4, ty - ty + 5 + i)
-        else
-            term.setBackgroundColor(colors.black)
-            term.setTextColor(colors.white)
-            io.write(" "..options[i])
-            term.setCursorPos(4, ty - ty + 5 + i)
-        end
-        term.setBackgroundColor(colors.black)
-        term.setTextColor(colors.white)
-    end
     term.setTextColor(colors.lightGray)
     if tx == 51 then
         term.setCursorPos(4, ty - 4)
@@ -88,10 +91,10 @@ local function drawBoxEvent()
         local event, key = os.pullEvent("key")
         if key == keys.up and s > 1 then
             s = s - 1
-            drawBoxEvent()
+            drawOptionsEvent()
         elseif key == keys.down and s < #options then
             s = s + 1
-            drawBoxEvent()
+            drawOptionsEvent()
         elseif key == keys.enter then
             term.clear()
             term.setCursorPos(1,1)
