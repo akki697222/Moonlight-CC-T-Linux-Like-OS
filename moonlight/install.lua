@@ -29,7 +29,7 @@ local function gettingpackage()
     cd("/moonlight")
     cd("boot")
     cd("mlbtl")
-    wget("https://raw.githubusercontent.com/akki697222/Moonlight-CC-T-Linux-Like-OS/main/moonlight/boot/mlbtl/loader")
+    shell.run("wget https://raw.githubusercontent.com/akki697222/Moonlight-CC-T-Linux-Like-OS/main/moonlight/boot/mlbtl/loader")
     cd("/moonlight")
     cd("shell")
     cd("cash")
@@ -38,7 +38,7 @@ local function gettingpackage()
     end
     cd("/moonlight/shell")
     cd("moonshell")
-    wget("https://raw.githubusercontent.com/akki697222/Moonlight-CC-T-Linux-Like-OS/main/moonlight/moonshell/shell")
+    shell.run("wget https://raw.githubusercontent.com/akki697222/Moonlight-CC-T-Linux-Like-OS/main/moonlight/moonshell/shell")
     cd("/moonlight")
     cd("sys")
     cd("kernel")
@@ -51,7 +51,7 @@ local function gettingpackage()
         local handle = fs.open("/moonlight/proc/"..v, "w")
         handle.close()
     end
-    wget("https://raw.githubusercontent.com/akki697222/Moonlight-CC-T-Linux-Like-OS/main/moonlight/proc/vinfo")
+    shell.run("wget https://raw.githubusercontent.com/akki697222/Moonlight-CC-T-Linux-Like-OS/main/moonlight/proc/vinfo")
 end
 
 local mdir = {
@@ -74,6 +74,6 @@ local sdir = {
     var = {"logs"},
 }
 
-wget("https://raw.githubusercontent.com/akki697222/Moonlight-CC-T-Linux-Like-OS/main/startup")
+shell.run("wget https://raw.githubusercontent.com/akki697222/Moonlight-CC-T-Linux-Like-OS/main/startup")
 createDirectories(mdir, sdir)
 gettingpackage()
