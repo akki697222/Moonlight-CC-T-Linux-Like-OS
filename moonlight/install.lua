@@ -1,18 +1,3 @@
-local function createDirectories(maindir, subdir)
-    for _, dir in ipairs(maindir) do
-        fs.makeDir(dir)
-        print("Created directory: "..dir)
-    end
-    
-    for main, subdirs in pairs(subdir) do
-        for _, subdir in ipairs(subdirs) do
-            local path = fs.combine(main, subdir)
-            fs.makeDir(path)
-            print("Created directory: "..path)
-        end
-    end
-end
-
 local function cd(path)
     shell.run("cd " .. path)
 end
@@ -54,29 +39,32 @@ local function gettingpackage()
     shell.run("wget https://raw.githubusercontent.com/akki697222/Moonlight-CC-T-Linux-Like-OS/main/moonlight/proc/vinfo")
 end
 
-local mdir = {
-    "/moonlight/bin",
-    "/moonlight/boot",
-    "/moonlight/data",
-    "/moonlight/etc",
-    "/moonlight/home",
-    "/moonlight/lib",
-    "/moonlight/proc",
-    "/moonlight/shell",
-    "/moonlight/sys",
-    "/moonlight/tmp",
-    "/moonlight/var",
-}
-local sdir = {
-    "/moonlight/boot" == {"mlbtl"},
-    "/moonlight/sys" == {"firmware", "kernel"},
-    "/moonlight/var" == {"logs"},
-}
-
 cd("/moonlight/shell")
 fs.makeDir("cash")
 fs.makeDir("moonshell")
+cd("/")
 shell.run("wget https://raw.githubusercontent.com/akki697222/Moonlight-CC-T-Linux-Like-OS/main/startup")
 cd("/moonlight")
-createDirectories(mdir, sdir)
+fs.makeDir("/moonlight/bin")
+fs.makeDir("/moonlight/boot")
+fs.makeDir("/moonlight/data")
+fs.makeDir("/moonlight/etc")
+fs.makeDir("/moonlight/home")
+fs.makeDir("/moonlight/lib")
+fs.makeDir("/moonlight/proc")
+fs.makeDir("/moonlight/shell")
+fs.makeDir("/moonlight/sys")
+fs.makeDir("/moonlight/tmp")
+fs.makeDir("/moonlight/var")
+cd("/moonlight/shell")
+fs.makeDir("cash")
+fs.makeDir("moonshell")
+cd("/moonlight/sys")
+fs.makeDir("firmware")
+fs.makeDir("kernel")
+cd("/moonlight/var")
+fs.makeDir("logs")
+cd("/moonlight/boot")
+fs.makeDir("mlbtl")
+cd("/")
 gettingpackage()
