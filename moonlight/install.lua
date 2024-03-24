@@ -55,22 +55,22 @@ local function gettingpackage()
 end
 
 local mdir = {
-    "bin",
-    "boot",
-    "data",
-    "etc",
-    "home",
-    "lib",
-    "proc",
-    "shell",
-    "sys",
-    "tmp",
-    "var",
+    "/moonlight/bin",
+    "/moonlight/boot",
+    "/moonlight/data",
+    "/moonlight/etc",
+    "/moonlight/home",
+    "/moonlight/lib",
+    "/moonlight/proc",
+    "/moonlight/shell",
+    "/moonlight/sys",
+    "/moonlight/tmp",
+    "/moonlight/var",
 }
 local sdir = {
-    boot = {"mlbtl"},
-    sys = {"firmware", "kernel"},
-    var = {"logs"},
+    "/moonlight/boot" == {"mlbtl"},
+    "/moonlight/sys" == {"firmware", "kernel"},
+    "/moonlight/var" == {"logs"},
 }
 
 cd("/moonlight/shell")
