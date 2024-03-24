@@ -3,13 +3,21 @@ local root = require("/moonlight/lib/libroothandler")
 local log = require("/moonlight/lib/liblogging")
 local slog = require("/moonlight/lib/libsyslog")
 local dev = require("/moonlight/lib/libdevmodehandler")
+local kernel = require("/moonlight/sys/kernel/kernel")
 local defaultDir = "moonlight/home"
+local exit = false
+local kp = {
+    "[Shell] Shell Exited an unexpected error."
+}
+if uCfg.getComputerLabel() == "" then
+    uCfg.setComputerLabel("Undefined")
+end
 uCfg.setDefaultUser("Default")
 
 local function drawShell()
     if root.getRootStatus() == true then
         term.setTextColor(colors.white)
-        io.write(uCfg.getCurrentUser() .. "@" .. os.getComputerID())
+        io.write(uCfg.getCurrentUser() .. "@" .. uCfg.getComputerLabel())
         if shell.dir() == defaultDir then
         else
             io.write("/" .. shell.dir())
@@ -23,7 +31,7 @@ local function drawShell()
         end
     elseif root.getRootStatus() == false then
         term.setTextColor(colors.lime)
-        io.write(uCfg.getCurrentUser() .. "@" .. os.getComputerID())
+        io.write(uCfg.getCurrentUser() .. "@" .. uCfg.getComputerLabel())
         term.setTextColor(colors.white)
         io.write(":")
         term.setTextColor(colors.lightBlue)
@@ -48,6 +56,7 @@ local function waitShellInput()
             if root.getRootStatus() == false then
                 log.write("Exiting Shell...", 1)
                 if dev.getMode() == "true" then
+                    exit = true
                     return
                 else
                     os.shutdown()
@@ -66,5 +75,17 @@ local function waitShellInput()
     end
 end
 
-shell.setDir("/"..defaultDir)
-waitShellInput()
+if not exit == true then
+    shell.setDir("/"..defaultDir)
+    local sc, r = pcall(waitShellInput)
+    if sc then
+    else
+        kernel.p("Shell Exited on unexpected error.", "moonshell", kp, r)
+    end
+elseif exit == true then
+    if dev.getMode() == true then
+        error("devmode")
+    else
+        os.shutdown()
+    end
+end

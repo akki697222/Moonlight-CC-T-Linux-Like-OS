@@ -1,0 +1,1 @@
+print("apt is not implemented. you can use `ccpt` commands.")

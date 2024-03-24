@@ -1,10 +1,8 @@
 --[[ 
 	ComputerCraft Package Tool
-	Author: PentagonLP
-	Version: 1.0
+	Author: PentagonLP and Customized by akki697222
+	Version: 1.1
 ]]
-
-startup = false
 
 -- Load properprint library
 os.loadAPI("/moonlight/lib/properprint.lua")
@@ -727,14 +725,16 @@ end
 --[[ Print help
 ]]--
 function help()
-	print("Syntax: ccpt")
+	print("ccpt 1.1 (moonlight)")
+	print("customized by akki697222 for moonlight linux")
+	print("Commands:")
 	for i,v in pairs(actions) do
 		if (not (v["comment"] == nil)) then
 			properprint.pprint(i .. ": " .. v["comment"],5)
 		end
 	end
 	print("")
-	print("This package tool has Super Creeper Powers.")
+	print("This CCPT has Super Skeleton Powers.")
 end
 
 -- Version
@@ -748,8 +748,8 @@ function version()
 	end
 	-- Print version
 	properprint.pprint("ComputerCraft Package Tool")
-	properprint.pprint("by PentagonLP")
-	properprint.pprint("Version: 1.0")
+	properprint.pprint("by PentagonLP and Customized by akki697222")
+	properprint.pprint("Version: 1.1")
 	properprint.pprint(linecount .. " lines of code containing " .. #readFile("/moonlight/bin/ccpt.lua",nil) .. " Characters.")
 end
 
@@ -884,12 +884,6 @@ actions = {
 	version = {
 		func = version,
 		comment = "Print CCPT Version"
-	},
-	zzzzzz = {
-		func = zzzzzz
-	},
-	boom = {
-		func = boom
 	}
 } 
 
@@ -954,15 +948,19 @@ shell.setCompletionFunction("ccpt", tabcomplete)
 startup = readFile("startup","") or ""
 if not startsWith(startup,"-- ccpt: Seach for updates\nshell.run(\"ccpt\",\"startup\")") then
 	startup = "-- ccpt: Seach for updates\nshell.run(\"ccpt\",\"startup\")\n\n" .. startup
-	storeFile("startup",startup)
-	print("[Installer] Startup entry created!")
+	--storeFile("startup",startup)
+	--print("[Installer] Startup entry created!")
 end
 
 -- Call required function
 if #args==0 then
-	properprint.pprint("Incomplete command, missing: 'Action'; Type 'ccpt help' for syntax.")
+	help()
 else if actions[args[1]]==nil then
-		properprint.pprint("Action '" .. args[1] .. "' is unknown. Type 'ccpt help' for syntax.")
+		term.setTextColor(colors.red)
+		io.write("E: ")
+		term.setTextColor(colors.white)
+		io.write("Invalid operation "..args[1])
+		print("")
 	else
 		actions[args[1]]["func"]()
 	end

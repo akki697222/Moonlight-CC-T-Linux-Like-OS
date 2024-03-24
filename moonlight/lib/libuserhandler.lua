@@ -24,4 +24,16 @@ function root.getDefaultUser()
     return content
 end
 
+function root.setComputerLabel(str)
+    local handle = fs.open("/moonlight/proc/clabel", "w")
+    handle.write(str)
+    handle.close()
+end
+
+function root.getComputerLabel() 
+    local handle = fs.open("/moonlight/proc/clabel", "r")
+    local content = handle.readAll()
+    return content
+end
+
 return root

@@ -10,7 +10,6 @@ wget("https://raw.githubusercontent.com/akki697222/Moonlight-CC-T-Linux-Like-OS/
 wget("https://raw.githubusercontent.com/akki697222/Moonlight-CC-T-Linux-Like-OS/main/packages/advancedcmd/commands/echo.lua")
 wget("https://raw.githubusercontent.com/akki697222/Moonlight-CC-T-Linux-Like-OS/main/packages/advancedcmd/commands/sudo.lua")
 wget("https://raw.githubusercontent.com/akki697222/Moonlight-CC-T-Linux-Like-OS/main/packages/advancedcmd/commands/switchshell.lua")
-wget("https://raw.githubusercontent.com/akki697222/Moonlight-CC-T-Linux-Like-OS/main/packages/advancedcmd/commands/tar.lua")
-shell.run("cp /moonlight/tmp/cmdinstaller_tmp/* /moonlight/bin")
+shell.run("copy /moonlight/tmp/cmdinstaller_tmp/* /moonlight/bin")
 shell.run("delete /moonlight/tmp/cmdinstaller_tmp")
 shell.run("cd /"..cDir)
