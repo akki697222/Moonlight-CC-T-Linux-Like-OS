@@ -13,13 +13,13 @@ local function gettingpackage()
         shell.run("wget https://raw.githubusercontent.com/akki697222/Moonlight-CC-T-Linux-Like-OS/main/moonlight/lib/"..wget..".lua")
     end
     cd("/moonlight/boot/mlbtl")
-    shell.run("wget https://raw.githubusercontent.com/akki697222/Moonlight-CC-T-Linux-Like-OS/main/moonlight/boot/mlbtl/loader/")
+    shell.run("wget https://raw.githubusercontent.com/akki697222/Moonlight-CC-T-Linux-Like-OS/main/moonlight/boot/mlbtl/loader.lua")
     cd("/moonlight/shell/cash")
     for _, wget in ipairs(shells) do
         shell.run("wget https://raw.githubusercontent.com/akki697222/Moonlight-CC-T-Linux-Like-OS/main/moonlight/shell/cash/"..wget..".lua")
     end
     cd("/moonlight/shell/moonshell")
-    shell.run("wget https://raw.githubusercontent.com/akki697222/Moonlight-CC-T-Linux-Like-OS/main/moonlight/moonshell/shell/")
+    shell.run("wget https://raw.githubusercontent.com/akki697222/Moonlight-CC-T-Linux-Like-OS/main/moonlight/moonshell/shell.lua")
     cd("/moonlight/sys/kernel")
     for _, wget in ipairs(sys) do
         shell.run("wget https://raw.githubusercontent.com/akki697222/Moonlight-CC-T-Linux-Like-OS/main/moonlight/sys/kernel/"..wget..".lua")
