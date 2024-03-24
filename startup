@@ -1,4 +1,3 @@
 local shellstat = require("/moonlight/lib/libshellstat")
 shellstat.setStat("false")
-shell.run("ccpt","startup")
 shell.run("/moonlight/boot/mlbtl/loader.lua")

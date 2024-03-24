@@ -78,5 +78,6 @@ local sdir = {
     var = {"logs"},
 }
 
+wget("https://raw.githubusercontent.com/akki697222/Moonlight-CC-T-Linux-Like-OS/main/startup")
 createDirectories(mdir, sdir)
 gettingpackage()
