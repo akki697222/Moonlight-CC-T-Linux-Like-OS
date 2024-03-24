@@ -13,17 +13,13 @@ local function createDirectories(maindir, subdir)
     end
 end
 
-local function wget(url)
-    shell.run("wget https://raw.githubusercontent.com/akki697222/Moonlight-CC-T-Linux-Like-OS/main/moonlight/"..url..".lua")
-end
-
 local function cd(path)
     shell.run("cd " .. path)
 end
 
 local function gettingpackage()
     local bin = {"libdevmodehandler", "liblogerror", "liblogging", "libsyslog", "libshellstat", "libroothandler", "libpasswordhandler", "libuserhandler", "properprint"}
-    local shell = {"cash/cash", "cash/env"}
+    local shells = {"cash/cash", "cash/env"}
     local sys = {"kernel/boot", "kernel/kernel"}
     local proc = {"clabel","currentuser","defaultuser","devmode","pass","root","shellrunning"}
     cd("bin")
@@ -37,7 +33,7 @@ local function gettingpackage()
     cd("/moonlight")
     cd("shell")
     cd("cash")
-    for _, wget in ipairs(shell) do
+    for _, wget in ipairs(shells) do
         shell.run("wget https://raw.githubusercontent.com/akki697222/Moonlight-CC-T-Linux-Like-OS/main/moonlight/"..wget..".lua")
     end
     cd("/moonlight/shell")
