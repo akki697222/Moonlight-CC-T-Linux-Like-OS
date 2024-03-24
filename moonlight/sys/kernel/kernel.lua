@@ -7,7 +7,11 @@ local errort = {
     "[kernel] error in function: kernel.p error: error code argument is not table value"
 }
 local aliasCommands = {
-    "ls", "cd", "cat", "grep", "log", "version", "switchshell", "su", "echo", "ccpt", "sudo", "brainpower", "help"
+    "ls", "cd", "cat", "grep", "log", "version", "su", "echo", "ccpt", "sudo", "brainpower", "help"
+}
+
+local aliasRootCommands = {
+    "switchshell"
 }
 
 local kernel = {}
@@ -36,6 +40,20 @@ function kernel.kprint(message, stat, tcolor)
     print("")
 end
 
+function kernel.initbin()
+    for index, value in ipairs(aliasCommands) do
+        shell.setAlias(value, "/moonlight/bin/" .. value)
+        slog.write("Set command alias: " .. value, "Kernel")
+    end
+end
+
+function kernel.initsbin()
+    for index, value in ipairs(aliasRootCommands) do
+        shell.setAlias(value, "/moonlight/sbin/" .. value)
+        slog.write("Set root command alias: " .. value, "Kernel")
+    end
+end
+
 function kernel.init()
     slog.init()
     log.init()
@@ -45,23 +63,9 @@ function kernel.init()
     kernel.kprint("Initilizing Kernel...", "WAIT", "orange")
     log.write("Initilizing Kernel...", 1)
     slog.write("Initilizing Kernel...", "Kernel")
-    shell.setAlias("dir", "/moonlight/bin/ls")
-    for index, value in ipairs(aliasCommands) do
-        shell.setAlias(value, "/moonlight/bin/" .. value)
-        slog.write("Set Alias: " .. value, "Kernel")
-    end
+    kernel.initbin()
+    kernel.initsbin()
     kernel.kprint("Kernel Initilized.", " OK ", "lime")
-end
-
-
-function kernel.a()
-
-end
-
-function kernel.shellStandAlone()
-    kernel.init()
-    shell.run("/moonlight/shell/moonshell/shell")
-    return
 end
 
 function kernel.p(reason, vendor, code, expection)

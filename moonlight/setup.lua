@@ -2,6 +2,24 @@ local function cd(path)
     shell.run("cd " .. path)
 end
 
+local function setComputerLabel(str)
+    local handle = fs.open("/moonlight/proc/clabel", "w")
+    handle.write(str)
+    handle.close()
+end
+
+local function setDefaultUser(str)
+    local handle = fs.open("/moonlight/proc/defaultuser", "w")
+    handle.write(str)
+    handle.close()
+end
+
+local function setPass(str)
+    local handle = fs.open("/moonlight/proc/pass", "w")
+    handle.write(str)
+    handle.close()
+end
+
 local function gettingpackage()
     local lib = {"libdevmodehandler", "liblogerror", "liblogging", "libsyslog", "libshellstat", "libroothandler", "libpasswordhandler", "libuserhandler", "properprint"}
     local shells = {"cash/cash", "cash/env"}
@@ -57,3 +75,23 @@ fs.makeDir("/moonlight/var/logs")
 fs.makeDir("/moonlight/boot/mlbtl")
 cd("/")
 gettingpackage()
+term.clear()
+term.setCursorPos(1,1)
+print("Please type your computer name.")
+local input = read()
+if not input == nil or "" then
+    setComputerLabel(input)
+end
+term.clear()
+term.setCursorPos(1,1)
+print("Please type your user name.")
+local input = read()
+if not input == nil or "" then
+    setDefaultUser(input)
+end
+print("Please set user password.")
+local input = read()
+setPass(input)
+print("Setup complete! the computer will restart after 5 seconds...")
+sleep(5)
+os.reboot()

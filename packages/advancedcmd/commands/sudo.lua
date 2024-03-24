@@ -12,6 +12,6 @@ else
         shell.run(table.concat(args, " "))
         root.setRootStatus(false)
     else
-        print("sudo: Access Denied.")
+        print("[Sudo]: Access Denied.")
     end
 end
