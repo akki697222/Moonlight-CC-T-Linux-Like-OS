@@ -1,5 +1,5 @@
 local cfg = {}
-local sysver = "0.2.9" -- this version is numbers of github commits lol
+local sysver = "0.3.1" -- this version is numbers of github commits lol
 local loaderver = "1.01" -- ml grub
 local biosver = "0.0.1" -- bios is not using
 
